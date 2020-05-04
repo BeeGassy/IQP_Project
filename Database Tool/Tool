@@ -1,0 +1,265 @@
+import pandas as pd
+import xlrd as xl
+import pyrebase
+config = {
+    "apiKey": "AIzaSyA8dt8nA8on-RG1dmEzT9cb17-zeYOWFDk",
+    "authDomain": "oramapp-1550b.firebaseapp.com",
+    "databaseURL": "https://oramapp-1550b.firebaseio.com/",
+    "storageBucket": "oramapp-1550b.appspot.com",
+    "serviceAccount": "C:\\Users\\asus\\PycharmProjects\\DBT\\ORAM_Firebase.json"
+}
+
+firebase = pyrebase.initialize_app(config)
+
+excel_file_path = "C:\\Users\\asus\\Desktop\\2019_Global_Referral_Database.xlsx"
+wb = xl.open_workbook(excel_file_path)
+ws = wb.sheet_by_name('Sheet1')
+
+
+def database_input(name_cut_str_input, website_cut_str_input, email_cut_str_input, telephone_cut_str_input,
+                   address_cut_str_input, country_str_input, description_str_input):
+    name = name_cut_str_input
+    website = website_cut_str_input
+    email = email_cut_str_input
+    telephone = telephone_cut_str_input
+    address = address_cut_str_input
+    country = country_str_input
+    description = description_str_input
+
+    if (name is None) and (website is None) and (email is None) and (telephone is None) and (address is None):
+        country = "Country"
+        print(country)
+
+        contact_details = "Contact Details"
+        print(contact_details)
+
+        description = "Description (Green = LGBTI Friendly)"
+        print(description)
+        print("-----------------------------------------------------------------------------------------------------")
+
+    else:
+        print("Name:")
+        print(name_cut_str_input, '\n')
+
+        print("Website:")
+        print(website_cut_str_input, '\n')
+
+        print("Email:")
+        print(email_cut_str_input, '\n')
+
+        print("Phone:")
+        print(telephone_cut_str_input, '\n')
+
+        print("Address:")
+        print(address_cut_str_input, '\n')
+
+        print("Country:")
+        print(country_str_input, '\n')
+
+        print("Description")
+        print(description_str_input, '\n')
+        print("-----------------------------------------------------------------------------------------------------")
+
+    print("\n")
+
+
+def string_parser(current_country_input, current_contact_details_input, current_description_input):
+
+    input_str_arr = [current_country_input, current_contact_details_input, current_description_input]
+
+    str_arr = current_contact_details_input.split('\n')
+
+    address = "Address"
+    address_index = current_contact_details_input.find("Address:")
+    address_string_length = 9
+    address_str = None
+    address_cut_str = None
+
+    country_str = current_country_input
+
+    description_str = current_description_input
+
+    email = "Email"
+    email_index = current_contact_details_input.find("Email:")
+    email_string_length = 7
+    email_str = None
+    email_cut_str = None
+
+    lgbt_friendly = "LGBTfriendly"
+    lgbt_friendly_str = None
+
+    name = "Name"
+    name_index = current_contact_details_input.find("Name:")
+    name_string_length = 6
+    name_str = None
+    name_cut_str = None
+
+    telephone = "Phone"
+    telephone_index = current_contact_details_input.find("Phone:")
+    telephone_string_length = 7
+    telephone_str = None
+    telephone_cut_str = None
+
+    website = "Website"
+    website_index = current_contact_details_input.find("Website:")
+    website_string_length = 9
+    website_str = None
+    website_cut_str = None
+
+    i = 0
+    if (name or website or email or address or telephone) in current_contact_details_input:
+        for i in range(0, len(str_arr)):
+            var = str_arr[i]
+
+            if var.find("Name:") > -1:
+                name_str = var
+                name_cut_str = name_str[name_string_length:]
+                print(name_cut_str)
+
+            elif var.find("Website:") > -1:
+                website_str = var
+                website_cut_str = website_str[website_string_length:]
+                print(website_cut_str)
+
+            elif var.find("Email:") > -1:
+                email_str = var
+                email_cut_str = email_str[email_string_length:]
+                print(email_cut_str)
+
+            elif var.find("Phone:") > -1:
+                telephone_str = var
+                telephone_cut_str = telephone_str[telephone_string_length:]
+                print(telephone_cut_str)
+
+            elif var.find("Address:") > -1:
+                address_str = var
+                address_cut_str = address_str[address_string_length:]
+                print(address_cut_str)
+
+            else:
+                print("Error: Issue With Unknown Data Title")
+
+        if name_cut_str is None:
+            name_cut_str = "N/A"
+
+        if website_cut_str is None:
+            website_cut_str = "N/A"
+
+        if email_cut_str is None:
+            email_cut_str = "N/A"
+
+        if telephone_cut_str is None:
+            telephone_cut_str = "N/A"
+
+        if address_cut_str is None:
+            address_cut_str = "N/A"
+
+    else:
+        print("Error: The Essential Information Is Missing. i.e. The Name, Number, Email...")
+
+    print("-----------------------------------------------------------------------------------------------------")
+    print("\nEntering Database Input \n")
+    database_input(name_cut_str, website_cut_str, email_cut_str, telephone_cut_str, address_cut_str, country_str,
+                   description_str)
+
+
+def excel_reader(workbook_input):
+    i = 1  # columns
+    j = 1  # rows
+
+    # TODO change maximum_row to a more generic variable
+    maximum_row = 350
+    maximum_col = 3
+
+    # iterates through each column and row extracting out each bit if information
+    # reference https://stackoverflow.com/questions/39306972/python-extract-text-between-two-strings-into-excel
+
+    # i is the row
+    # j is the col
+
+    # dynamic variable that takes the newly updated value of the
+    # country, contact_details, and description found
+    current_country = None
+    current_contact_details = None
+    current_description = None
+
+    # iterates through entirety of cells of the database
+    for i in range(0, maximum_row):
+        for j in range(0, maximum_col):
+            # represents the current "value" of the cell being iterated through
+            value = worksheet.cell(i, j).value
+
+            # represents if the left most column's cell is showing a country and if it
+            # is then it will store that countries name
+            if j == 0 and value != '':
+                current_country = worksheet.cell(i, j)
+
+            # represents titles of each column mainly for testing purposes--
+            if i == 0 and j >= 0:
+                if i == 0 and j == 0:
+                    current_country = value
+                    print(current_country)
+
+                if i == 0 and j == 1:
+                    current_contact_details = value
+                    print(current_contact_details)
+
+                if i == 0 and j == 2:
+                    current_description = value
+                    print(current_description)
+
+                print('Printed Value of cell: (%d, %d) \n \n' % ((i + 1), (j + 1)))
+
+            # represents all cells below the title row
+            if i > 0 and j >= 0:
+                # determines if the left most column's cell is empty or not
+                # if true then it will assign it the previously list country
+
+                if i > 0 and j == 0:
+                    if value == '':
+                        current_country = last_country
+                        print(current_country)
+
+                    else:
+                        # value = current_country
+                        # print(value)
+                        current_country = value
+                        last_country = current_country
+                        print(current_country)
+
+                # saves value of the contact details to a variable that can be manipulated later
+                elif i > 0 and j == 1:
+                    current_contact_details = value
+                    print(current_contact_details)
+
+                # saves value of the current description to a variable that can be manipulated later
+                elif i > 0 and j == 2:
+                    current_description = value
+                    print(current_description)
+
+                else:
+                    print("Error")
+
+                print('Printed Value of cell: (%d, %d) \n \n' % ((i + 1), (j + 1)))
+
+        if i > 0:
+            print(
+                "-----------------------------------------------------------------------------------------------------")
+            print("Entering String Parser")
+            string_parser(current_country, current_contact_details, current_description)
+
+        else:
+            print(
+                "-----------------------------------------------------------------------------------------------------")
+            print("Sending Title Info To database_input()")
+            database_input(None, None, None, None, None, current_country, current_description)
+
+    print("End of excel_reader")
+
+
+print('--------------------------------------------------------------------------\n')
+
+excel_reader(wb)
+
+
+
