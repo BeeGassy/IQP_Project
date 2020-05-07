@@ -198,7 +198,7 @@
                 resourceString =bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
                 + data.Phone + "<br>" + bdescription + data.Description;
 
-                listOfResources.push(resourceString);
+                listOfResources.push(resourceString); 
 
                 previousResource = document.getElementById("yourCountry").innerHTML;
                 document.getElementById("yourCountry").innerHTML = previousResource + "<br><br>" +  "Resource #" + listOfResources.length + "<br>" +  resourceString;
