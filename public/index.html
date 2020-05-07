@@ -38,8 +38,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="asylum.html">Asylum Information <span class="sr-only">(current)</span></a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Asylum Information
+          </a>          
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="asylum.html">General Information</a>
+            <a class="dropdown-item" href="definition.html">Definitions</a>
+          </div>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="#">Seek Help <span class="sr-only">(current)</span></a>
@@ -55,6 +62,17 @@
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="#">Contact Us</a>
             <a class="dropdown-item" href="FAQ.html">FAQ</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Change Language
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Arabic</a>
+            <a class="dropdown-item" href="#">French</a>
+            <a class="dropdown-item" href="#">Spanish</a>
           </div>
         </li>
       </ul>
@@ -209,14 +227,25 @@
 
       <!--Function that submits the given info on the form-->
       function submitForm(selectedCountry, isLGBT, isRORF) {
-        HideMainPage();
+        
 
-        if(isLGBT == 'Yes'){
+        console.log(selectedCountry)
+        console.log(isLGBT)
+        console.log(isRORF)
+        //No information entered
+        if(selectedCountry == "Choose..." || isLGBT == "Choose..." || isRORF == "Choose...")
+        {
+            console.log("ERROR PLEASE FILL OUT FORM")
+        }
+
+        else if(isLGBT == 'Yes'){
+          HideMainPage();
           DisplaySOGIResources(selectedCountry);
         }
 
         <!--Displays information for when someone is not SOGI-->
         else{
+          HideMainPage();
           DisplayResources(selectedCountry);
         }
       }
@@ -224,10 +253,9 @@
       <!--Function for SOGI Specified-->
       function DisplaySOGIResources(selectedCountry){
         console.log("1")
-        document.getElementById("descrip").innerHTML = "Thank you very much for contacting ORAM and for sharing your story with us. We are deeply saddened to hear of the difficulties you have experienced." 
-        + " ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity. Please note that ORAM receives many requests for help." 
-        + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. We do not have a physical presence in your country and are unable to take on your case. However, we can provide"
-        + " you with some general information about seeking asylum or refugee status and refer you to some organizations that might be able to assist you."
+        document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
+          + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and" 
+          + " refer you to some local organizations that might be able to assist you."
 
         document.getElementById("resourceInterest").style.textAlign = "left"
         document.getElementById("yourCountry").style.textAlign = "left"
@@ -292,7 +320,8 @@
             console.log(listOfLGBTResources.length)
             console.log(listOfResources.length)
             if(listOfLGBTResources.length < 1){
-              document.getElementById("LGBTStatusLabel").innerHTML = "LGBTI Advocating Resources"
+              document.getElementById("LGBTStatusLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance." 
+                + " However, you can find some international LGBT helpline that might give you support.";
             }
             else if(listOfLGBTResources.length == 1){
               document.getElementById("LGBTStatusLabel").innerHTML = "LGBTI Advocating Resources";
@@ -326,10 +355,9 @@
         document.getElementById("LGBTStatusLabel").style.textAlign = "left"
 
         console.log("1")
-        document.getElementById("descrip").innerHTML = "Thank you very much for contacting ORAM and sharing your story with us. We are deeply sorry to hear of the difficulties you" 
-        + " have experienced. ORAM advocates on behalf of asylum seekers and refugees who are persecuted in their country of origin. Please note that ORAM receives many requests for" 
-        + " help. Unfortunately, ORAM does not currently have the capacity to take on individual cases, other than in very particular circumstances, and within a limited geographic"
-        + " scope."
+        document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
+          + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and" 
+          + " refer you to some local organizations that might be able to assist you."
 
         listOfLGBTResources.splice(0, listOfLGBTResources.length)
 
@@ -393,14 +421,15 @@
             console.log(listOfResources.length)
             
             if(listOfLGBTResources.length + listOfResources.length < 1){
-              document.getElementById("descrip").innerHTML = "Asylum seeker/Refugee Resources"
+              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance." 
+                + " However, you can find some international LGBT helpline that might give you support.";
             }
             else if(listOfLGBTResources.length == 1){
-              document.getElementById("descrip").innerHTML = "Asylum seeker/Refugee Resources"
+              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
             }
 
             else{
-              document.getElementById("descrip").innerHTML = "Asylum seeker/Refugee Resources"
+              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
             }
 
 
