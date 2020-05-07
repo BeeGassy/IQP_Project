@@ -12,7 +12,12 @@
     margin-left: 380px;
     margin-right: 380px;
   }
+
+  .border-info {
+    border-color: #274472;
+  }w
 </style>
+
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -24,44 +29,123 @@
   <title>Help Line</title>
 </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" role="navigation" style="background-color:#274472">
-      <a class="navbar-brand" href="#"> <img src="/white.png" width="40px" height="40px"> ORAM: Help Line</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="asylum.html">Asylum Information <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Seek Help <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Referral Map</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
-              Support and Contact
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Contact Us</a>
-              <a class="dropdown-item" href="FAQ.html">FAQ</a>
-            </div>
-          </li>
-        </ul>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top" role="navigation" style="background-color:#274472">
+    <a class="navbar-brand" href="#"> <img src="/white.png" width="40px" height="40px"> ORAM: Help Line</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="asylum.html">Asylum Information <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Seek Help <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Referral Map</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Support and Contact
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Contact Us</a>
+            <a class="dropdown-item" href="FAQ.html">FAQ</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <row>
+    <br>
+    <div class="col-xs-1 text-center">
+      <div class="card mx-auto" style="border-color:white;max-width: 40rem;">
+        <h5 class="card-header">Welcome to the Help Line.</h5>
+        <div class="card-body">
+          <h4 class="card-title">Seeking Help?</h4>
+          <p class="card-text" id="descrip">Fill out this form to get filtered resources for your situation.</p>
+        </div>
       </div>
-    </nav>
-    <row>
-      <div class="col-xs-1 text-center">
+      <br>
+      <form>
+        <div class="card-deck mx-auto" style="max-width:90%">
+          <div class="card mx-auto" style="border-color:#274472;max-width: 40rem;">
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label id="LGBTStatusLabel" for="inputState">LGBT+ Status</label>
+                    <p id="resourceInterest">Are you interested in resources for LGBT+ people? </p>
+                    <select id="inputState" class="form-control">
+                      <option selected>Choose...</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div id="lowerColLeft" class="form-group">
+                    <label for="inputA">Kind of Help</label>
+                    <p>Please select what kind of assistance you are interested.</p>
+                    <select id="inputA" class="form-control">
+                      <option selected>Choose...</option>
+                      <option>Refugee/Asylum Seeking</option>
+                      <option>Mental Health</option>
+                    </select>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="card mx-auto" style="border-color:#274472;max-width: 40rem;">
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                  <div class="form-group">
+                    <label id="CountryLabel" for="inputCountry">Country</label>
+                    <p id="yourCountry">Please input the country you are located in. </p>
+                    <select id="inputCountry" class="form-control">
+                      <option selected>Choose...</option>
+                      <option>Afghanistan</option>
+                      <option>Albania</option>
+                      <option>Algeria</option>
+                      <option>Angola</option>
+                      <option>Armenia</option>
+                      <option>Argentina</option>
+                      <option>Australia</option>
+                      <option>Austria</option>
+                      <option>Azerbaijan</option>
+                      <option>Bahrain</option>
+                      <option>Canada</option>
+                      <option>Turkey</option>
+                    </select>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div id="lowerColRight" class="form-group">
+                    <label for="inputCity">Additional Comments</label>
+                    <p> Please input any additional comments you may have. </p>
+                    <input type="text" class="form-control" id="inputAddr">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <br>
-        <h3 id = "title"> Seeking Help? </h3>
-        <p id = "descrip"> Fill out this form to get filtered resources for your situation. </p>
-        <br>
-        <form class="form-style">
+
+        <button id="submitButton" type="button" style="width:10%"
+          onclick="submitForm(document.getElementById('inputCountry').value, document.getElementById('inputState').value, document.getElementById('inputA').value)"
+          class="btn btn-primary">Submit</button>
+        <p id="Resources"></p>
+        </p>
+      </form>
+
+      <!-- <form class="form-style">
           <div class="form-row">
             <div class="form-group col-md-6">
               <label id = "LGBTStatusLabel" for="inputState">LGBT+ Status</label>
@@ -83,7 +167,7 @@
                 <option>Angola</option>
                 <option>Armenia</option>
                 <option>Argentina</option>
-                <option>Australia </option>
+                <option>Australia</option>
                 <option>Austria</option>
                 <option>Azerbaijan</option>
                 <option>Bahrain</option>
@@ -108,14 +192,13 @@
               <input type="text" class="form-control" id="inputAddr">
             </div>
           </div>
-
           <button id = "submitButton" type="button" onclick="submitForm(document.getElementById('inputCountry').value, document.getElementById('inputState').value, document.getElementById('inputA').value)" class="btn btn-primary">Submit</button>
           <p id="Resources"></p> </p>
-        </form>
-      </div>
-    </row>
-
+        </form> -->
     </div>
+  </row>
+
+  </div>
 
     
     <!--Start of JavaScript Code-->
