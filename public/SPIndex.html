@@ -29,7 +29,7 @@
   <title>Help Line</title>
 </head>
 
-<body>
+<body onload="getCountries();">
   <nav class="navbar navbar-expand-lg navbar-dark sticky-top" role="navigation" style="background-color:#274472">
     <a class="navbar-brand" href="#"> <img src="/white.png" width="40px" height="40px"> ORAM: Help Line</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -41,27 +41,27 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
-            Informations sur l'asile
+            Información sobre el asilo
           </a>          
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="FRasylum.html">General Information</a>
-            <a class="dropdown-item" href="FRdefinition.html">Definitions</a>
+            <a class="dropdown-item" href="SPasylum.html">Información general</a>
+            <a class="dropdown-item" href="SPdefinition.html">Definiciones</a>
           </div>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#">Chercher de l'aide<span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#">Buscar ayuda <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="FRFAQ.html">FAQ <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="SPFAQ.html">FAQ <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="truSoumettree" aria-expanded="false">
+            aria-haspopup="true" aria-expanded="false">
             Change Language
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="index.html">English</a>
-            <a class="dropdown-item" href="#">Spanish</a>
+            <a class="dropdown-item" href="FRindex.html">French</a>
           </div>
         </li>
       </ul>
@@ -71,10 +71,10 @@
     <br>
     <div class="col-xs-1 text-center">
       <div class="card mx-auto" style="border-color:white;max-width: 40rem;">
-        <h5 class="card-header">Bienvenue à la ligne d'assistance téléphonique. Line.</h5>
+        <h5 class="card-header">Bienvenido a la línea de ayuda. Line.</h5>
         <div class="card-body">
-          <h4 class="card-title">Vous cherchez de l'aide ?</h4>
-          <p class="card-text" id="descrip">Remplissez ce formulaire pour obtenir des ressources filtrées en fonction de votre situation.</p>
+          <h4 class="card-title">¿Buscas ayuda? </h4>
+          <p class="card-text" id="descrip" >Rellene este formulario para que los recursos se filtren según tu situación. </p>
         </div>
       </div>
       <br>
@@ -85,21 +85,21 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <div class="form-group">
-                    <label id="LGBTStatusLabel" for="inputState">LGBT+ Status</label>
-                    <p id="resourceInterest">Vous êtes intéressé.e.s par les ressources destinées aux personnes LGBT+ ?</p>
+                    <label id="LGBTStatusLabel" for="inputState">LGTB+</label>
+                    <p id="resourceInterest">¿Te interesan los recursos para las personas LGTB+? </p>
                     <select id="inputState" class="form-control">
-                      <option selected>Choisissez...</option>
-                      <option>Oui</option>
-                      <option>Non</option>
+                      <option selected>Choose...</option>
+                      <option>Yes</option>
+                      <option>No</option>
                     </select>
                   </div>
                 </li>
                 <li class="list-group-item">
                   <div id="lowerColLeft" class="form-group">
-                    <label for="inputA">Type d'aide</label>
-                    <p>Veuillez sélectionner le type d'assistance qui vous intéresse.</p>
+                    <label for="inputA">Tipo de asistencia </label>
+                    <p>Por favor, selecciona el tipo de apoyo que te interesa. </p>
                     <select id="inputA" class="form-control">
-                      <option selected>Choisissez...</option>
+                      <option selected>Choose...</option>
                       <option>Refugee/Asylum Seeking</option>
                       <option>Mental Health</option>
                     </select>
@@ -113,29 +113,17 @@
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                   <div class="form-group">
-                    <label id="CountryLabel" for="inputCountry">Pays</label>
-                    <p id="yourCountry">Veuillez indiquer le pays dans lequel vous êtes situé.</p>
+                    <label id="CountryLabel" for="inputCountry">País </label>
+                    <p id="yourCountry">Por favor, indique el país en el que se encuentra. </p>
                     <select id="inputCountry" class="form-control">
-                      <option selected>Choisissez...</option>
-                      <option>Afghanistan</option>
-                      <option>Albania</option>
-                      <option>Algeria</option>
-                      <option>Angola</option>
-                      <option>Armenia</option>
-                      <option>Argentina</option>
-                      <option>Australia</option>
-                      <option>Austria</option>
-                      <option>Azerbaijan</option>
-                      <option>Bahrain</option>
-                      <option>Canada</option>
-                      <option>Turkey</option>
+                      <option selected>Choose...</option>
                     </select>
                   </div>
                 </li>
                 <li class="list-group-item">
                   <div id="lowerColRight" class="form-group">
-                    <label for="inputCity">Commentaires supplémentaires</label>
-                    <p> Veuillez nous faire part de vos commentaires supplémentaires. </p>
+                    <label for="inputCity">Comentarios adicionales </label>
+                    <p> Por favor, envíanos tus comentarios adicionales. </p>
                     <input type="text" class="form-control" id="inputAddr">
                   </div>
                 </li>
@@ -144,64 +132,13 @@
           </div>
         </div>
         <br>
-
         <button id="submitButton" type="button" style="width:10%"
           onclick="submitForm(document.getElementById('inputCountry').value, document.getElementById('inputState').value, document.getElementById('inputA').value)"
-          class="btn btn-primary">Soumettre</button>
-        <p id="Resources"></p>
-        </p>
+          class="btn btn-primary">Envíe
+        </button>
+        <p id="formError" style="color:red"></p>
       </form>
-
-      <!-- <form class="form-style">
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label id = "LGBTStatusLabel" for="inputState">LGBT+ Status</label>
-              <p id = "resourceInterest" >Are you interested in resources for LGBT+ people? </p>
-              <select id="inputState" class="form-control">
-                <option selected>Choisissez...</option>
-                <option>Yes</option>
-                <option>No</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <label id = "CountryLabel" for="inputCountry">Country</label>
-              <p id = "yourCountry">Please input the country you are located in. </p>
-              <select id="inputCountry" class="form-control">
-                <option selected>Choisissez...</option>
-                <option>Afghanistan</option>
-                <option>Albania</option>
-                <option>Algeria</option>
-                <option>Angola</option>
-                <option>Armenia</option>
-                <option>Argentina</option>
-                <option>Australia</option>
-                <option>Austria</option>
-                <option>Azerbaijan</option>
-                <option>Bahrain</option>
-                <option>Canada</option>
-                <option>Turkey</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div id = "lowerColLeft" class="form-group col-md-6">
-              <label for="inputA">Kind of Help</label>
-              <p>Please select what kind of assistance you are interested.</p>
-              <select id="inputA" class="form-control">
-                <option selected>Choisissez...</option>
-                <option>Refugee/Asylum Seeking</option>
-                <option>Mental Health</option>
-              </select>
-            </div>
-            <div id = "lowerColRight" class="form-group col-md-6">
-              <label for="inputCity">Additional Comments</label>
-              <p> Please input any additional comments you may have. </p>
-              <input type="text" class="form-control" id="inputAddr">
-            </div>
-          </div>
-          <button id = "submitButton" type="button" onclick="submitForm(document.getElementById('inputCountry').value, document.getElementById('inputState').value, document.getElementById('inputA').value)" class="btn btn-primary">Submit</button>
-          <p id="Resources"></p> </p>
-        </form> -->
+      <br>
     </div>
   </row>
 
@@ -222,9 +159,45 @@
         console.log(isLGBT)
         console.log(isRORF)
         //No information entered
-        if(selectedCountry == "Choisissez..." || isLGBT == "Choisissez..." || isRORF == "Choisissez...")
+        if(selectedCountry == "Choose..." && isLGBT == "Choose..." && isRORF == "Choose...")
         {
-            console.log("ERROR PLEASE FILL OUT FORM")
+           document.getElementById("formError").innerHTML = "Please fill out LGBT status, location, and kind of help";
+            console.log("Error no fields entered")
+        }
+
+        else if(selectedCountry == "Choose..." && isLGBT == "Choose...")
+        {
+          document.getElementById("formError").innerHTML = "Please fill out LGBT status and location";
+        }
+
+        else if(selectedCountry == "Choose..." && isRORF == "Choose...")
+        {
+          document.getElementById("formError").innerHTML = "Please fill out location and kind of help";
+        }
+
+        else if(isLGBT == "Choose..." && isRORF == "Choose...")
+        {
+          document.getElementById("formError").innerHTML = "Please fill out LGBT status and kind of help";
+        }
+
+        else if(selectedCountry == "Choose...")
+        {
+          document.getElementById("formError").innerHTML = "Please fill out location";
+        }
+
+        else if(isLGBT == "Choose...")
+        {
+          document.getElementById("formError").innerHTML = "Please fill out LGBT status";
+        }
+
+        else if(isRORF == "Choose...")
+        {
+          document.getElementById("formError").innerHTML = "Please fill out kind of help";
+        }
+
+        else if(document.getElementById("submitButton").innerHTML == "Back")
+        {
+          window.location.href = "index.html";
         }
 
         else if(isLGBT == 'Yes'){
@@ -246,8 +219,8 @@
           + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and" 
           + " refer you to some local organizations that might be able to assist you."
 
-        document.getElementById("resourceInterest").style.textAlign = "left"
-        document.getElementById("yourCountry").style.textAlign = "left"
+        document.getElementById("resourceInterest").style.textAlign = "Justify"
+        document.getElementById("yourCountry").style.textAlign = "Justify"
 
         listOfLGBTResources.splice(0, listOfLGBTResources.length)
 
@@ -311,6 +284,33 @@
             if(listOfLGBTResources.length < 1){
               document.getElementById("LGBTStatusLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance." 
                 + " However, you can find some international LGBT helpline that might give you support.";
+
+              country = "Country: ";
+              bName = name.fontcolor("#274472").bold();
+              bCountry = country.fontcolor("#274472").bold();
+              bWebsite = website.fontcolor("#274472").bold();
+              bEmail = email.fontcolor("#274472").bold();
+              bAddress = address.fontcolor("#274472").bold();
+              bPhone = phone.fontcolor("#274472").bold();
+              bdescription = description.fontcolor("#274472").bold();
+              website1 = "https://www.glbthotline.org/peer-chat.html";
+              website2 = "www.TrevorSpace.org";
+              website3 = "helpline@lgbt.foundation";
+
+              helpHotlines = "<br><br>Resource #1" + "<br>" + bName + " Trans Lifeline" + "<br>" + bCountry + " Canada" + "<br>" + bEmail + " support@samaritancrisisline.org.au" 
+              + "<br>" + bPhone + " 1-877-330-6366" + "<br>" + bdescription + " Crisis helpline 24/7; email response within 24 hours" + "<br><br>" +
+              "Resource #2" + "<br>" + bName + " Befrienders Kenya" + "<br>" + bCountry + " Kenya" + "<br>" + bEmail + " befrienderskenya@gmail.com" 
+              + "<br>" + bPhone + " 00254 722 178 177" + "<br>" + bdescription + " Hotline 6.00 to 21.00; email response within 24 hours" + "<br><br>" +
+              "Resource #3" + "<br>" + bName + " Trans Lifeline" + "<br>" + bCountry + " United States" + "<br>" + bPhone + " 1-877-565-8860" + "<br>" 
+              + bdescription + " Available 24/7" + "<br><br>" + 
+              "Resource #4" + "<br>" + bName + " The Trevor Project Lifeline" + "<br>" + bCountry + " United States" + "<br>" + bPhone + " 1-866-488-7986" + "<br>" 
+              + bdescription + " LGBTQ youth hotline, available 24/7, free" + "<br><br>" +
+              "Resource #5" + "<br>" + bName + " LGBT National Online Peer-Support Chat" + "<br>" + bWebsite + website1.link("https://www.glbthotline.org/peer-chat.html") + "<br><br>" +
+              "Resource #6" + "<br>" + bName + " The Trevor Project (international online community for LGBTQ youth)" + "<br>" + bWebsite + website1.link("www.TrevorSpace.org") + "<br><br>" +
+              "Resource #7" + "<br>" + bName + " LGBT Foundation (email support)" + "<br>" + bWebsite + website1.link("helpline@lgbt.foundation");
+                
+              
+              document.getElementById("resourceInterest").innerHTML = helpHotlines
             }
             else if(listOfLGBTResources.length == 1){
               document.getElementById("LGBTStatusLabel").innerHTML = "LGBTI Advocating Resources";
@@ -321,14 +321,16 @@
             }
 
             if(listOfResources.length < 1){
-              document.getElementById("LGBTStatusLabel").innerHTML = "Asylum seeker/Refugee Resources"
+              document.getElementById("CountryLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with refugee/asylum seeker assistance."
             }
             else if(listOfResources.length == 1){
-              document.getElementById("CountryLabel").innerHTML = "Asylum seeker/Refugee Resources";
+              document.getElementById("CountryLabel").innerHTML = "We do not know whether this organization caters specifically to or is welcoming of LGBTI individuals. If you seek assistance from this" +
+              " organization, please be careful when disclosing your sexual orientation or gender identity if you feel that doing so may put you at risk."
             }
 
             else{
-              document.getElementById("CountryLabel").innerHTML = "Asylum seeker/Refugee Resources";
+              document.getElementById("CountryLabel").innerHTML = "We do not know whether these organizations cater specifically to or are welcoming of LGBTI individuals. If you seek assistance" + 
+              "from these organizations, please be careful when disclosing your sexual orientation or gender identity if you feel that doing so may put you at risk. ";
             }
 
         })
@@ -340,8 +342,8 @@
         $('#resourceInterest').hide().find('input').prop('disabled', true);
         $('#yourCountry').hide().find('input').prop('disabled', true);
 
-        document.getElementById("CountryLabel").style.textAlign = "left"
-        document.getElementById("LGBTStatusLabel").style.textAlign = "left"
+        document.getElementById("CountryLabel").style.textAlign = "Justify"
+        document.getElementById("LGBTStatusLabel").style.textAlign = "Justify"
 
         console.log("1")
         document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
@@ -432,12 +434,76 @@
           $('#inputCountry').hide().find('input').prop('disabled', true);
           $('#lowerColLeft').hide().find('input').prop('disabled', true);
           $('#lowerColRight').hide().find('input').prop('disabled', true);
-          $('#submitButton').hide().find('input').prop('disabled', true);
+          //$('#submitButton').hide().find('input').prop('disabled', true);
+          $('#formError').hide().find('input').prop('disabled', true);
+          document.getElementById("submitButton").innerHTML = "Back"
           document.getElementById("CountryLabel").innerHTML = ""
           document.getElementById("LGBTStatusLabel").innerHTML = ""
           document.getElementById("resourceInterest").innerHTML = ""
           document.getElementById("yourCountry").innerHTML = ""
+          document.getElementById("LGBTStatusLabel").style.textAlign = "Justify"
+          document.getElementById("CountryLabel").style.textAlign = "Justify"
         }
+
+        function getCountries(){
+          countryArray = []
+          var database = firebase.database();
+
+          // Get the root of FireBase
+          var root = firebase.database().ref();
+
+          // Query the Films node under it
+          var query = root.child("entries");
+
+          // Get a snapshot containing the matching children from under Films
+          query.once("value")
+              .then(function(snapshot) {
+              snapshot.forEach(function(childSnapshot) {
+                console.log(childSnapshot.val().Country);
+                if (countryArray.indexOf(childSnapshot.val().Country) === -1) 
+                countryArray.push(childSnapshot.val().Country);
+              });     
+              countryArray.sort();
+              console.log(countryArray)
+              select = document.getElementById('inputCountry');
+                for(var i = 0; i < countryArray.length; i++) {
+                opt = countryArray[i];
+                el = document.createElement("option");
+                el.textContent = opt;
+                el.value = opt;
+                select.appendChild(el);
+                }         
+          })
+          
+/*        
+          db.collection('Organizations').get().then((snapshot) => {
+            snapshot.docs.forEach(doc => {
+              data = doc.data();
+
+              theCountry = data.Country;
+
+              if (countryArray.indexOf(theCountry) === -1) 
+                countryArray.push(theCountry);
+              countryArray.sort();
+
+              //console.log(countryArray);
+
+            
+            })
+            //console.log("Does here work???")
+            //console.log(countryArray);
+            select = document.getElementById('inputCountry');
+            for(var i = 0; i < countryArray.length; i++) {
+            opt = countryArray[i];
+            el = document.createElement("option");
+            el.textContent = opt;
+            el.value = opt;
+            select.appendChild(el);
+          }
+          
+          })
+          */
+        } 
  
     </script>
 
@@ -459,7 +525,7 @@
       https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
     <script>
       // Your web app's Firebase configuration
       var firebaseConfig = {
@@ -475,6 +541,7 @@
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore()
+      const rtdb = firebase.database()
       firebase.analytics();
     </script>
   </body>
