@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 
@@ -15,7 +14,8 @@
 
   .border-info {
     border-color: #274472;
-  }w
+  }
+
 </style>
 
 <head>
@@ -42,7 +42,7 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Asylum Information
-          </a>          
+          </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="asylum.html">General Information</a>
             <a class="dropdown-item" href="definition.html">Definitions</a>
@@ -74,7 +74,7 @@
         <h5 class="card-header">Welcome to the Help Line.</h5>
         <div class="card-body">
           <h4 class="card-title">Seeking Help?</h4>
-          <p class="card-text" id="descrip" >Fill out this form to get filtered resources for your situation.</p>
+          <p class="card-text" id="descrip">Fill out this form to get filtered resources for your situation.</p>
         </div>
       </div>
       <br>
@@ -132,7 +132,7 @@
           </div>
         </div>
         <br>
-        <button id="submitButton" type="button" style="width:10%"
+        <button id="submitButton" type="button" style="width: 10rem"
           onclick="submitForm(document.getElementById('inputCountry').value, document.getElementById('inputState').value, document.getElementById('inputA').value)"
           class="btn btn-primary">Submit
         </button>
@@ -144,379 +144,371 @@
 
   </div>
 
-    
-    <!--Start of JavaScript Code-->
-    <script>
-      let listOfResources = []
-      let listOfLGBTResources = []  
-      let tempResource = null;
 
-      /* <!--Function that submits the given info on the form--> */
-      function submitForm(selectedCountry, isLGBT, isRORF) {
-        
+  <!--Start of JavaScript Code-->
+  <script>
+    let listOfResources = []
+    let listOfLGBTResources = []
+    let tempResource = null;
 
-        console.log(selectedCountry)
-        console.log(isLGBT)
-        console.log(isRORF)
-        //No information entered
-        if(selectedCountry == "Choose..." && isLGBT == "Choose..." && isRORF == "Choose...")
-        {
-           document.getElementById("formError").innerHTML = "Please fill out LGBT status, location, and kind of help";
-            console.log("Error no fields entered")
-        }
+    /* <!--Function that submits the given info on the form--> */
+    function submitForm(selectedCountry, isLGBT, isRORF) {
 
-        else if(selectedCountry == "Choose..." && isLGBT == "Choose...")
-        {
-          document.getElementById("formError").innerHTML = "Please fill out LGBT status and location";
-        }
 
-        else if(selectedCountry == "Choose..." && isRORF == "Choose...")
-        {
-          document.getElementById("formError").innerHTML = "Please fill out location and kind of help";
-        }
-
-        else if(isLGBT == "Choose..." && isRORF == "Choose...")
-        {
-          document.getElementById("formError").innerHTML = "Please fill out LGBT status and kind of help";
-        }
-
-        else if(selectedCountry == "Choose...")
-        {
-          document.getElementById("formError").innerHTML = "Please fill out location";
-        }
-
-        else if(isLGBT == "Choose...")
-        {
-          document.getElementById("formError").innerHTML = "Please fill out LGBT status";
-        }
-
-        else if(isRORF == "Choose...")
-        {
-          document.getElementById("formError").innerHTML = "Please fill out kind of help";
-        }
-
-        else if(document.getElementById("submitButton").innerHTML == "Back")
-        {
-          window.location.href = "index.html";
-        }
-
-        else if(isLGBT == 'Yes'){
-          HideMainPage();
-          DisplaySOGIResources(selectedCountry);
-        }
-
-        /* <!--Displays information for when someone is not SOGI--> */
-        else{
-          HideMainPage();
-          DisplayResources(selectedCountry);
-        }
+      console.log(selectedCountry)
+      console.log(isLGBT)
+      console.log(isRORF)
+      //No information entered
+      if (selectedCountry == "Choose..." && isLGBT == "Choose..." && isRORF == "Choose...") {
+        document.getElementById("formError").innerHTML = "Please fill out LGBT status, location, and kind of help";
+        console.log("Error no fields entered")
       }
 
-      /* <!--Function for SOGI Specified--> */
-      function DisplaySOGIResources(selectedCountry){
-        console.log("1")
-        document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
-          + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and" 
-          + " refer you to some local organizations that might be able to assist you."
-
-        document.getElementById("resourceInterest").style.textAlign = "Justify"
-        document.getElementById("yourCountry").style.textAlign = "Justify"
-
-        listOfLGBTResources.splice(0, listOfLGBTResources.length)
-
-        listOfResources.splice(0, listOfLGBTResources.length)
-        
-
-        /* //Displays information for when someone is LGBT */
-
-        console.log("Before DB collection")
-        db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
-            console.log("2")
-            snapshot.docs.forEach(doc => {
-              console.log("3")
-              console.log(doc.data());
-              data = doc.data();
-
-              name = "Name: ";
-              bName = name.fontcolor("#274472").bold();
-
-              website = "Website: "
-              bWebsite = website.fontcolor("#274472").bold();
-
-              email = "Email: "
-              bEmail = email.fontcolor("#274472").bold();
-
-              address = "Address: "
-              bAddress = address.fontcolor("#274472").bold();
-
-              phone = "Phone: "
-              bPhone = phone.fontcolor("#274472").bold();
-
-              description = "Description: "
-              bdescription = description.fontcolor("#274472").bold();
-
-              resourceLGBT = data.LGBTFriendly;
-              if(resourceLGBT){
-
-                resourceStringLGBT =bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
-
-                listOfLGBTResources.push(resourceStringLGBT);
-
-                previousLGBTResource = document.getElementById("resourceInterest").innerHTML;
-                document.getElementById("resourceInterest").innerHTML = previousLGBTResource + "<br><br>" +  "Resource #" + listOfLGBTResources.length + "<br>" +  resourceStringLGBT;
-              }
-
-              else {
-                resourceString =bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
-
-                listOfResources.push(resourceString); 
-
-                previousResource = document.getElementById("yourCountry").innerHTML;
-                document.getElementById("yourCountry").innerHTML = previousResource + "<br><br>" +  "Resource #" + listOfResources.length + "<br>" +  resourceString;
-              }
-              
-              
-            })
-            console.log(listOfLGBTResources.length)
-            console.log(listOfResources.length)
-            if(listOfLGBTResources.length < 1){
-              document.getElementById("LGBTStatusLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance." 
-                + " However, you can find some international LGBT helpline that might give you support.";
-
-              country = "Country: ";
-              bName = name.fontcolor("#274472").bold();
-              bCountry = country.fontcolor("#274472").bold();
-              bWebsite = website.fontcolor("#274472").bold();
-              bEmail = email.fontcolor("#274472").bold();
-              bAddress = address.fontcolor("#274472").bold();
-              bPhone = phone.fontcolor("#274472").bold();
-              bdescription = description.fontcolor("#274472").bold();
-              website1 = "https://www.glbthotline.org/peer-chat.html";
-              website2 = "www.TrevorSpace.org";
-              website3 = "helpline@lgbt.foundation";
-
-              helpHotlines = "<br><br>Resource #1" + "<br>" + bName + " Trans Lifeline" + "<br>" + bCountry + " Canada" + "<br>" + bEmail + " support@samaritancrisisline.org.au" 
-              + "<br>" + bPhone + " 1-877-330-6366" + "<br>" + bdescription + " Crisis helpline 24/7; email response within 24 hours" + "<br><br>" +
-              "Resource #2" + "<br>" + bName + " Befrienders Kenya" + "<br>" + bCountry + " Kenya" + "<br>" + bEmail + " befrienderskenya@gmail.com" 
-              + "<br>" + bPhone + " 00254 722 178 177" + "<br>" + bdescription + " Hotline 6.00 to 21.00; email response within 24 hours" + "<br><br>" +
-              "Resource #3" + "<br>" + bName + " Trans Lifeline" + "<br>" + bCountry + " United States" + "<br>" + bPhone + " 1-877-565-8860" + "<br>" 
-              + bdescription + " Available 24/7" + "<br><br>" + 
-              "Resource #4" + "<br>" + bName + " The Trevor Project Lifeline" + "<br>" + bCountry + " United States" + "<br>" + bPhone + " 1-866-488-7986" + "<br>" 
-              + bdescription + " LGBTQ youth hotline, available 24/7, free" + "<br><br>" +
-              "Resource #5" + "<br>" + bName + " LGBT National Online Peer-Support Chat" + "<br>" + bWebsite + website1.link("https://www.glbthotline.org/peer-chat.html") + "<br><br>" +
-              "Resource #6" + "<br>" + bName + " The Trevor Project (international online community for LGBTQ youth)" + "<br>" + bWebsite + website1.link("www.TrevorSpace.org") + "<br><br>" +
-              "Resource #7" + "<br>" + bName + " LGBT Foundation (email support)" + "<br>" + bWebsite + website1.link("helpline@lgbt.foundation");
-                
-              
-              document.getElementById("resourceInterest").innerHTML = helpHotlines
-            }
-            else if(listOfLGBTResources.length == 1){
-              document.getElementById("LGBTStatusLabel").innerHTML = "LGBTI Advocating Resources";
-            }
-
-            else{
-              document.getElementById("LGBTStatusLabel").innerHTML = "LGBTI Advocating Resources";
-            }
-
-            if(listOfResources.length < 1){
-              document.getElementById("CountryLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with refugee/asylum seeker assistance."
-            }
-            else if(listOfResources.length == 1){
-              document.getElementById("CountryLabel").innerHTML = "We do not know whether this organization caters specifically to or is welcoming of LGBTI individuals. If you seek assistance from this" +
-              " organization, please be careful when disclosing your sexual orientation or gender identity if you feel that doing so may put you at risk."
-            }
-
-            else{
-              document.getElementById("CountryLabel").innerHTML = "We do not know whether these organizations cater specifically to or are welcoming of LGBTI individuals. If you seek assistance" + 
-              "from these organizations, please be careful when disclosing your sexual orientation or gender identity if you feel that doing so may put you at risk. ";
-            }
-
-        })
-        console.log("5")
+      else if (selectedCountry == "Choose..." && isLGBT == "Choose...") {
+        document.getElementById("formError").innerHTML = "Please fill out LGBT status and location";
       }
 
-      // Function for non SOGI Specified
-      function DisplayResources(selectedCountry){
-        $('#resourceInterest').hide().find('input').prop('disabled', true);
-        $('#yourCountry').hide().find('input').prop('disabled', true);
+      else if (selectedCountry == "Choose..." && isRORF == "Choose...") {
+        document.getElementById("formError").innerHTML = "Please fill out location and kind of help";
+      }
 
-        document.getElementById("CountryLabel").style.textAlign = "Justify"
-        document.getElementById("LGBTStatusLabel").style.textAlign = "Justify"
+      else if (isLGBT == "Choose..." && isRORF == "Choose...") {
+        document.getElementById("formError").innerHTML = "Please fill out LGBT status and kind of help";
+      }
 
-        console.log("1")
-        document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
-          + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and" 
-          + " refer you to some local organizations that might be able to assist you."
+      else if (selectedCountry == "Choose...") {
+        document.getElementById("formError").innerHTML = "Please fill out location";
+      }
 
-        listOfLGBTResources.splice(0, listOfLGBTResources.length)
+      else if (isLGBT == "Choose...") {
+        document.getElementById("formError").innerHTML = "Please fill out LGBT status";
+      }
 
-        listOfResources.splice(0, listOfLGBTResources.length)
+      else if (isRORF == "Choose...") {
+        document.getElementById("formError").innerHTML = "Please fill out kind of help";
+      }
 
-        resourceLGBT = 0;
+      else if (document.getElementById("submitButton").innerHTML == "Back") {
+        window.location.href = "index.html";
+      }
 
-        /* //Displays information for when someone is LGBT */
+      else if (isLGBT == 'Yes') {
+        HideMainPage();
+        DisplaySOGIResources(selectedCountry);
+      }
 
-        console.log("Before DB collection")
-        db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
-            console.log("2")
-            snapshot.docs.forEach(doc => {
-              data = doc.data();
+      /* <!--Displays information for when someone is not SOGI--> */
+      else {
+        HideMainPage();
+        DisplayResources(selectedCountry);
+      }
+    }
 
-              name = "Name: ";
-              bName = name.fontcolor("#274472").bold();
+    /* <!--Function for SOGI Specified--> */
+    function DisplaySOGIResources(selectedCountry) {
+      console.log("1")
+      document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity."
+        + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and"
+        + " refer you to some local organizations that might be able to assist you."
 
-              website = "Website: "
-              bWebsite = website.fontcolor("#274472").bold();
+      document.getElementById("resourceInterest").style.textAlign = "Justify"
+      document.getElementById("yourCountry").style.textAlign = "Justify"
 
-              email = "Email: "
-              bEmail = email.fontcolor("#274472").bold();
+      listOfLGBTResources.splice(0, listOfLGBTResources.length)
 
-              address = "Address: "
-              bAddress = address.fontcolor("#274472").bold();
+      listOfResources.splice(0, listOfLGBTResources.length)
 
-              phone = "Phone: "
-              bPhone = phone.fontcolor("#274472").bold();
 
-              description = "Description: "
-              bdescription = description.fontcolor("#274472").bold();
+      /* //Displays information for when someone is LGBT */
 
-              if(resourceLGBT == 0){
-                console.log("Inside if resourceLGBT == 0 ")
-                resourceLGBT = 1;
-                resourceStringLGBT = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
+      console.log("Before DB collection")
+      db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
+        console.log("2")
+        snapshot.docs.forEach(doc => {
+          console.log("3")
+          console.log(doc.data());
+          data = doc.data();
 
-                listOfLGBTResources.push(resourceStringLGBT);
+          name = "Name: ";
+          bName = name.fontcolor("#274472").bold();
 
-                previousLGBTResource = document.getElementById("LGBTStatusLabel").innerHTML;
-                document.getElementById("LGBTStatusLabel").innerHTML = previousLGBTResource + "<br><br>" +  "Resource #" + (listOfLGBTResources.length + listOfResources.length) + "<br>" +  resourceStringLGBT;
-              }
+          website = "Website: "
+          bWebsite = website.fontcolor("#274472").bold();
 
-              else {
-                console.log("Inside else")
-                resourceLGBT = 0;
-                resourceString = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
+          email = "Email: "
+          bEmail = email.fontcolor("#274472").bold();
 
-                listOfResources.push(resourceString);
+          address = "Address: "
+          bAddress = address.fontcolor("#274472").bold();
 
-                previousResource = document.getElementById("CountryLabel").innerHTML;
-                document.getElementById("CountryLabel").innerHTML = previousResource + "<br><br>" +  "Resource #" + (listOfLGBTResources.length + listOfResources.length) + "<br>" +  resourceString;
-              }
-              
-              
-            })
-            console.log(listOfLGBTResources.length)
-            console.log(listOfResources.length)
-            
-            if(listOfLGBTResources.length + listOfResources.length < 1){
-              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance." 
-                + " However, you can find some international LGBT helpline that might give you support.";
-            }
-            else if(listOfLGBTResources.length == 1){
-              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
-            }
+          phone = "Phone: "
+          bPhone = phone.fontcolor("#274472").bold();
 
-            else{
-              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
-            }
+          description = "Description: "
+          bdescription = description.fontcolor("#274472").bold();
+
+          resourceLGBT = data.LGBTFriendly;
+          if (resourceLGBT) {
+
+            resourceStringLGBT = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone
+              + data.Phone + "<br>" + bdescription + data.Description;
+
+            listOfLGBTResources.push(resourceStringLGBT);
+
+            previousLGBTResource = document.getElementById("resourceInterest").innerHTML;
+            document.getElementById("resourceInterest").innerHTML = previousLGBTResource + "<br><br>" + "Resource #" + listOfLGBTResources.length + "<br>" + resourceStringLGBT;
+          }
+
+          else {
+            resourceString = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone
+              + data.Phone + "<br>" + bdescription + data.Description;
+
+            listOfResources.push(resourceString);
+
+            previousResource = document.getElementById("yourCountry").innerHTML;
+            document.getElementById("yourCountry").innerHTML = previousResource + "<br><br>" + "Resource #" + listOfResources.length + "<br>" + resourceString;
+          }
 
 
         })
-        console.log("5")
-      }
+        console.log(listOfLGBTResources.length)
+        console.log(listOfResources.length)
+        if (listOfLGBTResources.length < 1) {
+          document.getElementById("LGBTStatusLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance."
+            + " However, you can find some international LGBT helpline that might give you support.";
 
-        /* // Function that hides all elements within main div */
-        function HideMainPage(){
-          $('#inputState').hide().find('input').prop('disabled', true);
-          $('#inputCountry').hide().find('input').prop('disabled', true);
-          $('#lowerColLeft').hide().find('input').prop('disabled', true);
-          $('#lowerColRight').hide().find('input').prop('disabled', true);
-          //$('#submitButton').hide().find('input').prop('disabled', true);
-          $('#formError').hide().find('input').prop('disabled', true);
-          document.getElementById("submitButton").innerHTML = "Back"
-          document.getElementById("CountryLabel").innerHTML = ""
-          document.getElementById("LGBTStatusLabel").innerHTML = ""
-          document.getElementById("resourceInterest").innerHTML = ""
-          document.getElementById("yourCountry").innerHTML = ""
-          document.getElementById("LGBTStatusLabel").style.textAlign = "Justify"
-          document.getElementById("CountryLabel").style.textAlign = "Justify"
+          country = "Country: ";
+          bName = name.fontcolor("#274472").bold();
+          bCountry = country.fontcolor("#274472").bold();
+          bWebsite = website.fontcolor("#274472").bold();
+          bEmail = email.fontcolor("#274472").bold();
+          bAddress = address.fontcolor("#274472").bold();
+          bPhone = phone.fontcolor("#274472").bold();
+          bdescription = description.fontcolor("#274472").bold();
+          website1 = "https://www.glbthotline.org/peer-chat.html";
+          website2 = "www.TrevorSpace.org";
+          website3 = "helpline@lgbt.foundation";
+
+          helpHotlines = "<br><br>Resource #1" + "<br>" + bName + " Trans Lifeline" + "<br>" + bCountry + " Canada" + "<br>" + bEmail + " support@samaritancrisisline.org.au"
+            + "<br>" + bPhone + " 1-877-330-6366" + "<br>" + bdescription + " Crisis helpline 24/7; email response within 24 hours" + "<br><br>" +
+            "Resource #2" + "<br>" + bName + " Befrienders Kenya" + "<br>" + bCountry + " Kenya" + "<br>" + bEmail + " befrienderskenya@gmail.com"
+            + "<br>" + bPhone + " 00254 722 178 177" + "<br>" + bdescription + " Hotline 6.00 to 21.00; email response within 24 hours" + "<br><br>" +
+            "Resource #3" + "<br>" + bName + " Trans Lifeline" + "<br>" + bCountry + " United States" + "<br>" + bPhone + " 1-877-565-8860" + "<br>"
+            + bdescription + " Available 24/7" + "<br><br>" +
+            "Resource #4" + "<br>" + bName + " The Trevor Project Lifeline" + "<br>" + bCountry + " United States" + "<br>" + bPhone + " 1-866-488-7986" + "<br>"
+            + bdescription + " LGBTQ youth hotline, available 24/7, free" + "<br><br>" +
+            "Resource #5" + "<br>" + bName + " LGBT National Online Peer-Support Chat" + "<br>" + bWebsite + website1.link("https://www.glbthotline.org/peer-chat.html") + "<br><br>" +
+            "Resource #6" + "<br>" + bName + " The Trevor Project (international online community for LGBTQ youth)" + "<br>" + bWebsite + website1.link("www.TrevorSpace.org") + "<br><br>" +
+            "Resource #7" + "<br>" + bName + " LGBT Foundation (email support)" + "<br>" + bWebsite + website1.link("helpline@lgbt.foundation");
+
+
+          document.getElementById("resourceInterest").innerHTML = helpHotlines
+        }
+        else if (listOfLGBTResources.length == 1) {
+          document.getElementById("LGBTStatusLabel").innerHTML = "LGBTI Advocating Resources";
         }
 
-        function getCountries(){
-          countryArray = []
-          var database = firebase.database();
+        else {
+          document.getElementById("LGBTStatusLabel").innerHTML = "LGBTI Advocating Resources";
+        }
 
-          // Get the root of FireBase
-          var root = firebase.database().ref();
+        if (listOfResources.length < 1) {
+          document.getElementById("CountryLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with refugee/asylum seeker assistance."
+        }
+        else if (listOfResources.length == 1) {
+          document.getElementById("CountryLabel").innerHTML = "We do not know whether this organization caters specifically to or is welcoming of LGBTI individuals. If you seek assistance from this" +
+            " organization, please be careful when disclosing your sexual orientation or gender identity if you feel that doing so may put you at risk."
+        }
 
-          // Query the Films node under it
-          var query = root.child("entries");
+        else {
+          document.getElementById("CountryLabel").innerHTML = "We do not know whether these organizations cater specifically to or are welcoming of LGBTI individuals. If you seek assistance" +
+            "from these organizations, please be careful when disclosing your sexual orientation or gender identity if you feel that doing so may put you at risk. ";
+        }
 
-          // Get a snapshot containing the matching children from under Films
-          query.once("value")
-              .then(function(snapshot) {
-              snapshot.forEach(function(childSnapshot) {
-                console.log(childSnapshot.val().Country);
-                if (countryArray.indexOf(childSnapshot.val().Country) === -1) 
-                countryArray.push(childSnapshot.val().Country);
-              });     
-              countryArray.sort();
-              console.log(countryArray)
-              select = document.getElementById('inputCountry');
-                for(var i = 0; i < countryArray.length; i++) {
-                opt = countryArray[i];
-                el = document.createElement("option");
-                el.textContent = opt;
-                el.value = opt;
-                select.appendChild(el);
-                }         
-          })
-          
-/*        
-          db.collection('Organizations').get().then((snapshot) => {
-            snapshot.docs.forEach(doc => {
-              data = doc.data();
+      })
+      console.log("5")
+    }
 
-              theCountry = data.Country;
+    // Function for non SOGI Specified
+    function DisplayResources(selectedCountry) {
+      $('#resourceInterest').hide().find('input').prop('disabled', true);
+      $('#yourCountry').hide().find('input').prop('disabled', true);
 
-              if (countryArray.indexOf(theCountry) === -1) 
-                countryArray.push(theCountry);
-              countryArray.sort();
+      document.getElementById("CountryLabel").style.textAlign = "Justify"
+      document.getElementById("LGBTStatusLabel").style.textAlign = "Justify"
 
-              //console.log(countryArray);
+      console.log("1")
+      document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity."
+        + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and"
+        + " refer you to some local organizations that might be able to assist you."
 
-            
-            })
-            //console.log("Does here work???")
-            //console.log(countryArray);
-            select = document.getElementById('inputCountry');
-            for(var i = 0; i < countryArray.length; i++) {
+      listOfLGBTResources.splice(0, listOfLGBTResources.length)
+
+      listOfResources.splice(0, listOfLGBTResources.length)
+
+      resourceLGBT = 0;
+
+      /* //Displays information for when someone is LGBT */
+
+      console.log("Before DB collection")
+      db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
+        console.log("2")
+        snapshot.docs.forEach(doc => {
+          data = doc.data();
+
+          name = "Name: ";
+          bName = name.fontcolor("#274472").bold();
+
+          website = "Website: "
+          bWebsite = website.fontcolor("#274472").bold();
+
+          email = "Email: "
+          bEmail = email.fontcolor("#274472").bold();
+
+          address = "Address: "
+          bAddress = address.fontcolor("#274472").bold();
+
+          phone = "Phone: "
+          bPhone = phone.fontcolor("#274472").bold();
+
+          description = "Description: "
+          bdescription = description.fontcolor("#274472").bold();
+
+          if (resourceLGBT == 0) {
+            console.log("Inside if resourceLGBT == 0 ")
+            resourceLGBT = 1;
+            resourceStringLGBT = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone
+              + data.Phone + "<br>" + bdescription + data.Description;
+
+            listOfLGBTResources.push(resourceStringLGBT);
+
+            previousLGBTResource = document.getElementById("LGBTStatusLabel").innerHTML;
+            document.getElementById("LGBTStatusLabel").innerHTML = previousLGBTResource + "<br><br>" + "Resource #" + (listOfLGBTResources.length + listOfResources.length) + "<br>" + resourceStringLGBT;
+          }
+
+          else {
+            console.log("Inside else")
+            resourceLGBT = 0;
+            resourceString = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone
+              + data.Phone + "<br>" + bdescription + data.Description;
+
+            listOfResources.push(resourceString);
+
+            previousResource = document.getElementById("CountryLabel").innerHTML;
+            document.getElementById("CountryLabel").innerHTML = previousResource + "<br><br>" + "Resource #" + (listOfLGBTResources.length + listOfResources.length) + "<br>" + resourceString;
+          }
+
+
+        })
+        console.log(listOfLGBTResources.length)
+        console.log(listOfResources.length)
+
+        if (listOfLGBTResources.length + listOfResources.length < 1) {
+          document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance."
+            + " However, you can find some international LGBT helpline that might give you support.";
+        }
+        else if (listOfLGBTResources.length == 1) {
+          document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
+        }
+
+        else {
+          document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
+        }
+
+
+      })
+      console.log("5")
+    }
+
+    /* // Function that hides all elements within main div */
+    function HideMainPage() {
+      $('#inputState').hide().find('input').prop('disabled', true);
+      $('#inputCountry').hide().find('input').prop('disabled', true);
+      $('#lowerColLeft').hide().find('input').prop('disabled', true);
+      $('#lowerColRight').hide().find('input').prop('disabled', true);
+      //$('#submitButton').hide().find('input').prop('disabled', true);
+      $('#formError').hide().find('input').prop('disabled', true);
+      document.getElementById("submitButton").innerHTML = "Back"
+      document.getElementById("CountryLabel").innerHTML = ""
+      document.getElementById("LGBTStatusLabel").innerHTML = ""
+      document.getElementById("resourceInterest").innerHTML = ""
+      document.getElementById("yourCountry").innerHTML = ""
+      document.getElementById("LGBTStatusLabel").style.textAlign = "Justify"
+      document.getElementById("CountryLabel").style.textAlign = "Justify"
+    }
+
+    function getCountries() {
+      countryArray = []
+      var database = firebase.database();
+
+      // Get the root of FireBase
+      var root = firebase.database().ref();
+
+      // Query the Films node under it
+      var query = root.child("entries");
+
+      // Get a snapshot containing the matching children from under Films
+      query.once("value")
+        .then(function (snapshot) {
+          snapshot.forEach(function (childSnapshot) {
+            console.log(childSnapshot.val().Country);
+            if (countryArray.indexOf(childSnapshot.val().Country) === -1)
+              countryArray.push(childSnapshot.val().Country);
+          });
+          countryArray.sort();
+          console.log(countryArray)
+          select = document.getElementById('inputCountry');
+          for (var i = 0; i < countryArray.length; i++) {
             opt = countryArray[i];
             el = document.createElement("option");
             el.textContent = opt;
             el.value = opt;
             select.appendChild(el);
           }
-          
-          })
-          */
-        } 
- 
-    </script>
+        })
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-      integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-      crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-      crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-      integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-      crossorigin="anonymous"></script>
+      /*        
+                db.collection('Organizations').get().then((snapshot) => {
+                  snapshot.docs.forEach(doc => {
+                    data = doc.data();
+      
+                    theCountry = data.Country;
+      
+                    if (countryArray.indexOf(theCountry) === -1) 
+                      countryArray.push(theCountry);
+                    countryArray.sort();
+      
+                    //console.log(countryArray);
+      
+                  
+                  })
+                  //console.log("Does here work???")
+                  //console.log(countryArray);
+                  select = document.getElementById('inputCountry');
+                  for(var i = 0; i < countryArray.length; i++) {
+                  opt = countryArray[i];
+                  el = document.createElement("option");
+                  el.textContent = opt;
+                  el.value = opt;
+                  select.appendChild(el);
+                }
+                
+                })
+                */
+    }
+
+  </script>
+
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
@@ -526,23 +518,24 @@
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
-    <script>
-      // Your web app's Firebase configuration
-      var firebaseConfig = {
-        apiKey: "AIzaSyA8dt8nA8on-RG1dmEzT9cb17-zeYOWFDk",
-        authDomain: "oramapp-1550b.firebaseapp.com",
-        databaseURL: "https://oramapp-1550b.firebaseio.com",
-        projectId: "oramapp-1550b",
-        storageBucket: "oramapp-1550b.appspot.com",
-        messagingSenderId: "1019162950802",
-        appId: "1:1019162950802:web:ed4af194e4a9c7c1b3ba4b",
-        measurementId: "G-S5D69JGMGM"
-      };
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore()
-      const rtdb = firebase.database()
-      firebase.analytics();
-    </script>
-  </body>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyA8dt8nA8on-RG1dmEzT9cb17-zeYOWFDk",
+      authDomain: "oramapp-1550b.firebaseapp.com",
+      databaseURL: "https://oramapp-1550b.firebaseio.com",
+      projectId: "oramapp-1550b",
+      storageBucket: "oramapp-1550b.appspot.com",
+      messagingSenderId: "1019162950802",
+      appId: "1:1019162950802:web:ed4af194e4a9c7c1b3ba4b",
+      measurementId: "G-S5D69JGMGM"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore()
+    const rtdb = firebase.database()
+    firebase.analytics();
+  </script>
+</body>
+
 </html>
