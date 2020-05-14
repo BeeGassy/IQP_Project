@@ -151,7 +151,7 @@
       let listOfLGBTResources = []  
       let tempResource = null;
 
-      <!--Function that submits the given info on the form-->
+      /* <!--Function that submits the given info on the form--> */
       function submitForm(selectedCountry, isLGBT, isRORF) {
         
 
@@ -205,14 +205,14 @@
           DisplaySOGIResources(selectedCountry);
         }
 
-        <!--Displays information for when someone is not SOGI-->
+        /* <!--Displays information for when someone is not SOGI--> */
         else{
           HideMainPage();
           DisplayResources(selectedCountry);
         }
       }
 
-      <!--Function for SOGI Specified-->
+      /* <!--Function for SOGI Specified--> */
       function DisplaySOGIResources(selectedCountry){
         console.log("1")
         document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
@@ -227,7 +227,7 @@
         listOfResources.splice(0, listOfLGBTResources.length)
         
 
-        //Displays information for when someone is LGBT
+        /* //Displays information for when someone is LGBT */
 
         console.log("Before DB collection")
         db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
@@ -356,7 +356,7 @@
 
         resourceLGBT = 0;
 
-        //Displays information for when someone is LGBT
+        /* //Displays information for when someone is LGBT */
 
         console.log("Before DB collection")
         db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
@@ -428,7 +428,7 @@
         console.log("5")
       }
 
-        // Function that hides all elements within main div
+        /* // Function that hides all elements within main div */
         function HideMainPage(){
           $('#inputState').hide().find('input').prop('disabled', true);
           $('#inputCountry').hide().find('input').prop('disabled', true);
