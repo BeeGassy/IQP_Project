@@ -151,7 +151,7 @@
       let listOfLGBTResources = []  
       let tempResource = null;
 
-      <!--Function that submits the given info on the form-->
+      //Function that submits the given info on the form
       function submitForm(selectedCountry, isLGBT, isRORF) {
         
 
@@ -205,14 +205,14 @@
           DisplaySOGIResources(selectedCountry);
         }
 
-        <!--Displays information for when someone is not SOGI-->
+        //Displays information for when someone is not SOGI
         else{
           HideMainPage();
           DisplayResources(selectedCountry);
         }
       }
 
-      <!--Function for SOGI Specified-->
+      //Function for SOGI Specified
       function DisplaySOGIResources(selectedCountry){
         console.log("1")
         document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
@@ -474,35 +474,6 @@
                 select.appendChild(el);
                 }         
           })
-          
-/*        
-          db.collection('Organizations').get().then((snapshot) => {
-            snapshot.docs.forEach(doc => {
-              data = doc.data();
-
-              theCountry = data.Country;
-
-              if (countryArray.indexOf(theCountry) === -1) 
-                countryArray.push(theCountry);
-              countryArray.sort();
-
-              //console.log(countryArray);
-
-            
-            })
-            //console.log("Does here work???")
-            //console.log(countryArray);
-            select = document.getElementById('inputCountry');
-            for(var i = 0; i < countryArray.length; i++) {
-            opt = countryArray[i];
-            el = document.createElement("option");
-            el.textContent = opt;
-            el.value = opt;
-            select.appendChild(el);
-          }
-          
-          })
-          */
         } 
  
     </script>
