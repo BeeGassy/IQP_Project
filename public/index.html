@@ -144,7 +144,6 @@
 
   </div>
 
-    
     <!--Start of JavaScript Code-->
     <script>
       let listOfResources = []
@@ -153,16 +152,11 @@
 
       //Function that submits the given info on the form
       function submitForm(selectedCountry, isLGBT, isRORF) {
-        
 
-        console.log(selectedCountry)
-        console.log(isLGBT)
-        console.log(isRORF)
-        //No information entered
+        // No information entered
         if(selectedCountry == "Choose..." && isLGBT == "Choose..." && isRORF == "Choose...")
         {
            document.getElementById("formError").innerHTML = "Please fill out LGBT status, location, and kind of help";
-            console.log("Error no fields entered")
         }
 
         else if(selectedCountry == "Choose..." && isLGBT == "Choose...")
@@ -214,7 +208,6 @@
 
       //Function for SOGI Specified
       function DisplaySOGIResources(selectedCountry){
-        console.log("1")
         document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
           + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and" 
           + " refer you to some local organizations that might be able to assist you."
@@ -226,16 +219,19 @@
 
         listOfResources.splice(0, listOfLGBTResources.length)
         
-
         //Displays information for when someone is LGBT
 
-        console.log("Before DB collection")
-        db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
-            console.log("2")
-            snapshot.docs.forEach(doc => {
-              console.log("3")
-              console.log(doc.data());
-              data = doc.data();
+        // Loads database
+        var database = firebase.database();
+        // Get the root of FireBase
+        var root = firebase.database().ref();
+        // Query entries in database that have the selected country
+        var query = root.child("entries").orderByChild("Country").equalTo(selectedCountry);
+
+        query.once("value").then(function(snapshot) {
+            snapshot.forEach(
+              function(childSnapshot){
+              data = childSnapshot.val()
 
               name = "Name: ";
               bName = name.fontcolor("#274472").bold();
@@ -255,11 +251,11 @@
               description = "Description: "
               bdescription = description.fontcolor("#274472").bold();
 
-              resourceLGBT = data.LGBTFriendly;
+              resourceLGBT = data.LGBT_Friendly;
               if(resourceLGBT){
 
                 resourceStringLGBT =bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
+                + data.Telephone + "<br>" + bdescription + data.Description;
 
                 listOfLGBTResources.push(resourceStringLGBT);
 
@@ -269,18 +265,16 @@
 
               else {
                 resourceString =bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
+                + data.Telephone + "<br>" + bdescription + data.Description;
 
                 listOfResources.push(resourceString); 
 
                 previousResource = document.getElementById("yourCountry").innerHTML;
                 document.getElementById("yourCountry").innerHTML = previousResource + "<br><br>" +  "Resource #" + listOfResources.length + "<br>" +  resourceString;
               }
-              
-              
+                            
             })
-            console.log(listOfLGBTResources.length)
-            console.log(listOfResources.length)
+
             if(listOfLGBTResources.length < 1){
               document.getElementById("LGBTStatusLabel").innerHTML = "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance." 
                 + " However, you can find some international LGBT helpline that might give you support.";
@@ -309,7 +303,6 @@
               "Resource #6" + "<br>" + bName + " The Trevor Project (international online community for LGBTQ youth)" + "<br>" + bWebsite + website1.link("www.TrevorSpace.org") + "<br><br>" +
               "Resource #7" + "<br>" + bName + " LGBT Foundation (email support)" + "<br>" + bWebsite + website1.link("helpline@lgbt.foundation");
                 
-              
               document.getElementById("resourceInterest").innerHTML = helpHotlines
             }
             else if(listOfLGBTResources.length == 1){
@@ -334,7 +327,6 @@
             }
 
         })
-        console.log("5")
       }
 
       // Function for non SOGI Specified
@@ -345,7 +337,6 @@
         document.getElementById("CountryLabel").style.textAlign = "Justify"
         document.getElementById("LGBTStatusLabel").style.textAlign = "Justify"
 
-        console.log("1")
         document.getElementById("descrip").innerHTML = "ORAM advocates on behalf of asylum seekers and refugees who are fleeing persecution on the basis of their sexual orientation or gender identity." 
           + " Unfortunately, ORAM’s capacity to take on individual cases is extremely limited in scope. However, we can provide you with some general information about seeking asylum or refugee status and" 
           + " refer you to some local organizations that might be able to assist you."
@@ -356,76 +347,78 @@
 
         resourceLGBT = 0;
 
-        //Displays information for when someone is LGBT
+        // Loads database
+        var database = firebase.database();
+        // Get the root of FireBase
+        var root = firebase.database().ref();
+        // Query the Films node under it
+        var query = root.child("entries").orderByChild("Country").equalTo(selectedCountry);
 
-        console.log("Before DB collection")
-        db.collection('Organizations').where('Country', '==', selectedCountry).get().then((snapshot) => {
-            console.log("2")
-            snapshot.docs.forEach(doc => {
-              data = doc.data();
+        // Get a snapshot containing the matching children from under Films
+        query.once("value").then(function(snapshot) {
+            snapshot.forEach(
+              function(childSnapshot){
+                if(childSnapshot.val().LGBT_Friendly){
 
-              name = "Name: ";
-              bName = name.fontcolor("#274472").bold();
+                }
+                else{
+                data = childSnapshot.val();
 
-              website = "Website: "
-              bWebsite = website.fontcolor("#274472").bold();
+                name = "Name: ";
+                bName = name.fontcolor("#274472").bold();
 
-              email = "Email: "
-              bEmail = email.fontcolor("#274472").bold();
+                website = "Website: "
+                bWebsite = website.fontcolor("#274472").bold();
 
-              address = "Address: "
-              bAddress = address.fontcolor("#274472").bold();
+                email = "Email: "
+                bEmail = email.fontcolor("#274472").bold();
 
-              phone = "Phone: "
-              bPhone = phone.fontcolor("#274472").bold();
+                address = "Address: "
+                bAddress = address.fontcolor("#274472").bold();
 
-              description = "Description: "
-              bdescription = description.fontcolor("#274472").bold();
+                phone = "Phone: "
+                bPhone = phone.fontcolor("#274472").bold();
 
-              if(resourceLGBT == 0){
-                console.log("Inside if resourceLGBT == 0 ")
+                description = "Description: "
+                bdescription = description.fontcolor("#274472").bold();
+
+                if(resourceLGBT == 0){
                 resourceLGBT = 1;
-                resourceStringLGBT = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
+                resourceStringLGBT = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + 
+                data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone + data.Telephone + "<br>" + bdescription + data.Description;
 
                 listOfLGBTResources.push(resourceStringLGBT);
 
                 previousLGBTResource = document.getElementById("LGBTStatusLabel").innerHTML;
                 document.getElementById("LGBTStatusLabel").innerHTML = previousLGBTResource + "<br><br>" +  "Resource #" + (listOfLGBTResources.length + listOfResources.length) + "<br>" +  resourceStringLGBT;
-              }
+                }
 
-              else {
-                console.log("Inside else")
-                resourceLGBT = 0;
-                resourceString = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
-                + data.Phone + "<br>" + bdescription + data.Description;
+                else {
+                  resourceLGBT = 0;
+                  resourceString = bName + data.Name + "<br>" + bWebsite + data.Website.link(data.Website) + "<br>" + bEmail + data.Email + "<br>" + bAddress + data.Address + "<br>" + bPhone 
+                + data.Telephone + "<br>" + bdescription + data.Description;
 
-                listOfResources.push(resourceString);
+                  listOfResources.push(resourceString);
 
-                previousResource = document.getElementById("CountryLabel").innerHTML;
-                document.getElementById("CountryLabel").innerHTML = previousResource + "<br><br>" +  "Resource #" + (listOfLGBTResources.length + listOfResources.length) + "<br>" +  resourceString;
-              }
-              
-              
-            })
-            console.log(listOfLGBTResources.length)
-            console.log(listOfResources.length)
-            
-            if(listOfLGBTResources.length + listOfResources.length < 1){
+                  previousResource = document.getElementById("CountryLabel").innerHTML;
+                  document.getElementById("CountryLabel").innerHTML = previousResource + "<br><br>" +  "Resource #" + (listOfLGBTResources.length + listOfResources.length) + "<br>" +  resourceString;
+                }
+                }
+                }
+              );
+              if(listOfLGBTResources.length + listOfResources.length < 1){
               document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "ORAM is unaware of any organizations based in " + selectedCountry + " that can provide you with assistance." 
                 + " However, you can find some international LGBT helpline that might give you support.";
-            }
-            else if(listOfLGBTResources.length == 1){
-              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
-            }
+              }
+              else if(listOfLGBTResources.length == 1){
+                document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
+              }
 
-            else{
-              document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
+              else{
+                document.getElementById("descrip").innerHTML = document.getElementById("descrip").textContent + "<br><br>" + "Asylum seeker/Refugee Resources"
+              }
             }
-
-
-        })
-        console.log("5")
+          )
       }
 
         // Function that hides all elements within main div
@@ -459,12 +452,10 @@
           query.once("value")
               .then(function(snapshot) {
               snapshot.forEach(function(childSnapshot) {
-                console.log(childSnapshot.val().Country);
                 if (countryArray.indexOf(childSnapshot.val().Country) === -1) 
                 countryArray.push(childSnapshot.val().Country);
               });     
               countryArray.sort();
-              console.log(countryArray)
               select = document.getElementById('inputCountry');
                 for(var i = 0; i < countryArray.length; i++) {
                 opt = countryArray[i];
